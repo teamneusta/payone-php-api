@@ -6,6 +6,7 @@ namespace ArvPayoneApi\Request\Parts;
 
 class CartFactory
 {
+    private const DECIMAL_FACTOR = 100; // same as decimalFactor / %coreshop.currency.decimal_factor% in config
     /**
      * @return Cart
      */
@@ -40,7 +41,7 @@ class CartFactory
         if ($basket['shippingAmountNet'] > 0) {
             $taxRate = (int )round(
                 ($basket['shippingAmount'] / $basket['shippingAmountNet'] - 1)
-                * 10000
+                * self::DECIMAL_FACTOR
             );
         }
         $shippingCost = new CartItem(
